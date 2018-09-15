@@ -30,3 +30,5 @@ Another way to force our fallback function to always fail is by adding a `revert
 > Contracts that receive Ether directly (without a function call, i.e. using send or transfer) but do not define a fallback function throw an exception, sending back the Ether
 
 Therefore, if we omit a fallback function altogether, our contract will be unable to directly receive Ether from the `transfer()` function, which will cause the King contract's fallback function to fail. As a result, the final contract will look just like the one above.
+
+_Note: If calling the `becomeKing()` function with MetaMask, you may need to manually change the gas limit from the confirmation dialog_
