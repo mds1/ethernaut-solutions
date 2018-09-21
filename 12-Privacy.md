@@ -3,7 +3,7 @@ The goal here is to unlock the contract, by figuring out the key stored in the `
 Because the `data` variable is private, the only way to view it is to figure out where it lives in storage, then use `web3.eth.getStorageAt()` to find its value. Based on what we know about how [Solidity stores state variables](https://solidity.readthedocs.io/en/v0.4.25/miscellaneous.html), we can figure out what slot the `data` variable lives in:
 * The first variable declared is a `bool`, which takes up 1 byte and lives in slot 0
 * The next variable is a `uint256`, which takes up 32 bytes. However, this variable is also declared `constant`, and [constants are not kept in storage](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables). Instead, they are re-evaluated each time they are used. Therefore, this variable will not take up a storage slot
-* The next three variables are a `uint8`, another `uint8`, and a `uint16`. This totals to 32 bits, or 1 byte, and therefore can fit in slot 0. Variables in slot 0 are currently using 2 of the 32 available bytes
+* The next three variables are a `uint8`, another `uint8`, and a `uint16`. These use 1, 1, and 2 bytes respectively, and therefore can fit in slot 0. Variables in slot 0 are currently using 5 of the 32 available bytes
 * The final state variable is the three element `bytes32` data array we're interested in. Arrays always start in new slots, and here each element in the array takes up a full 32 byte slot. Therefore, the three elements live in slots 1, 2, and 3 respectively.
 
 First, let's confirm this analysis by looking at the variables in slot 0. In the console we use the following expression to view what's in slot 0:
